@@ -2,12 +2,6 @@
 
 This README walks you through how to setup how to set up an Ubuntu 20.04 development environment on DigitalOcean. Although it is starting off as a step-by-step guide, my long-term goal is to automate as much of this as possible, so that a dev environment can be created in minutes (if not seconds).
 
-## Summary
-
-1. [Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet](#set-up-an-ubuntu-20.04-server-on-a-digitalocean-droplet)
-1. [x]
-1. [Connect to Your Droplet with VS Code](#connect-to-your-droplet-with-vs-code)
-
 ## I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
 
 ### Step 1 - Creating a DigitalOcean account
