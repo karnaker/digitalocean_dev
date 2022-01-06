@@ -207,6 +207,27 @@ xargs -I{} mv {} .config-backup/{}
 1. Set the flag `showUntrackedFiles` to no on this specific (local) repository: `config config --local status.showUntrackedFiles no`
 1. You're done, from now on you can now type config commands to add and update your dotfiles, for example: `config status`
 
+## VII. Install MongoDB Database Tools
+_The MongoDB Database Tools are a collection of command-line utilities for working with a MongoDB deployment. These tools release independently from the MongoDB Server schedule._
+
+### Step 1 - Installing MongoDB Database Tools
+
+1. `cd /tmp`
+1. Navigate to the [MongoDB Database Tools downloads page](https://www.mongodb.com/try/download/database-tools).
+1. Find the **Available Downloads** section on the right-hand side of the page and select your desired **Version** (e.g. the latest), **Platform** (e.g. Ubuntu 20.04 x86_64), and Package (e.g. deb) from the drop-down menus there.
+1. Run a wget command and pass the link you just copied to it as an argument. This will download the package to your working directory: `wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.5.1.deb`
+1. Then install the .deb package with apt: `sudo apt install ./mongodb-database-tools-ubuntu2004-x86_64-100.5.1.deb`
+1. Test the installation:
+   * `mongodump --version`
+
+   > <img src="https://user-images.githubusercontent.com/35387991/148426061-a0a64145-1b96-4042-9f0a-219d387bc3a5.png" 
+      align="center" alt="mongodump --version output" width="382" height="102">
+
+   * `mongorestore --version`
+
+   > <img src="https://user-images.githubusercontent.com/35387991/148426071-de2a6186-5b28-4b22-960f-08d378160af9.png" 
+      align="center" alt="mongorestore --version output" width="378" height="104">
+
 ## References
 
 1. I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
@@ -224,6 +245,9 @@ xargs -I{} mv {} .config-backup/{}
    1. [Miniconda](https://docs.conda.io/en/latest/miniconda.html#latest-miniconda-installer-links)
 1. VI. Install your dotfiles onto a new system
    1. [The best way to store your dotfiles: A bare Git repository](https://www.atlassian.com/git/tutorials/dotfiles)
+1. VII. Install MongoDB Database Tools
+   1. [MongoDB: Choose which type of deployment is best for you](https://www.mongodb.com/try/download)
+   1. [How To Install MongoDB on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04)
 1. Other
    1. [How to Set Up SSH Keys on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
    1. [Awesome README](https://github.com/matiassingers/awesome-readme)
