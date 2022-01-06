@@ -2,12 +2,18 @@
 
 This README walks you through how to setup how to set up an Ubuntu 20.04 development environment on DigitalOcean. Although it is starting off as a step-by-step guide, my long-term goal is to automate as much of this as possible, so that a dev environment can be created in minutes (if not seconds).
 
+## Summary
+
+1. [Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet](#set-up-an-ubuntu-20.04-server-on-a-digitalocean-droplet)
+1. [x]
+1. [Connect to Your Droplet with VS Code](#connect-to-your-droplet-with-vs-code)
+
 ## I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
 
 ### Step 1 - Creating a DigitalOcean account
 
 1. Go to [DigitalOcean](https://www.digitalocean.com/)
-1. `Sign Up` for an account, or `Log In` if you already have one.
+1. **Sign Up** for an account, or **Log In** if you already have one.
 
 <img src="https://user-images.githubusercontent.com/35387991/148154629-ce1fe5ca-3496-47b6-bfd4-44a9c96d6eef.jpg" 
      align="center" alt="DigitalOcean Log In or Sign Up" width="665" height="33">
@@ -108,12 +114,123 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 1. Add a copy of your local public key to the new user's ~/.ssh/authorized_keys file to log in successfully as the new user: `rsync --archive --chown=vikram:vikram ~/.ssh /home/vikram`
 1. Open up a new terminal session on your local machine, and use SSH with your new username: `ssh vikram@your_server_ip`. You should be logged in to the new user account without using a password.
 
+## III. Connect to Your Droplet with VS Code
+
+### Step 1 - Connect to a Droplet
+
+1. In VS Code, select **Remote-SSH: Connect to Host...** from the Command Palette (**F1**, **Ctrl+Shift+P**)
+1. Enter the same SSH with your new username, for example: `ssh vikram@your_server_ip`
+1. If VS Code cannot automatically detect the type of server you are connecting to, select **Linux** manually.
+1. You will be asked to pick a config file to use. You can select the default and enter your Droplet information in the format below:
+   >Host `memorable_name` \
+   >    HostName `00.000.00.000` \
+   >    User `vikram` \
+   >    IdentityFile `~\.ssh\id_rsa`
+
+## IV. Connect to GitHub with SSH
+
+### Step 1 - Checking for existing SSH keys
+
+1. Enter `ls -al ~/.ssh` to see if existing SSH keys are present.
+
+### Step 2 - Generating a new SSH key and adding it to the ssh-agent
+
+1. Paste the following, substituting in your GitHub email address: `ssh-keygen -t ed25519 -C "your_email@example.com"`
+1. When you're prompted to "Enter file in which to save the key," press Enter. This accepts the default file location.
+
+### Step 3 - Adding your SSH key to the ssh-agent
+
+1. Start the ssh-agent in the background: `eval $(ssh-agent)`
+1. Add your SSH private key to the ssh-agent: `ssh-add ~/.ssh/id_ed25519`
+
+### Step 4 - Adding a new SSH key to your GitHub account
+
+1. Copy the SSH public key to your clipboard:
+   * `cat ~/.ssh/id_ed25519.pub`
+   * Then select and copy the contents of the id_ed25519.pub file displayed in the terminal to your clipboard
+1. In the upper-right corner of any GitHub page, click your **profile photo**, then click **Settings**.
+1. In the user settings sidebar, click **SSH and GPG keys**.
+1. Click **New SSH key** or **Add SSH key**.
+1. In the "Title" field, add a descriptive label for the new key. For example, if you're using a personal Mac, you might call this key "Personal MacBook Air".
+1. Paste your key into the "Key" field.
+1. Click **Add SSH key**.
+1. If prompted, confirm your GitHub password.
+
+### Step 5 - Testing your SSH connection
+
+1. Enter the following to attempt to ssh to GitHub: `ssh -T git@github.com`
+1. You may see a warning like this:
+   > The authenticity of host 'github.com (IP ADDRESS)' can't be established.
+   > RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+   > Are you sure you want to continue connecting (yes/no)?
+1. Verify that the fingerprint in the message you see matches [GitHub's RSA public key fingerprint](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints). If it does, then type `yes`.
+
+## V. Install Miniconda on Ubuntu 20.04
+
+### Step 1 - Retrieving the Latest Version of Miniconda
+
+1. From a web browser, view the [Latest Miniconda Installer Links](https://docs.conda.io/en/latest/miniconda.html#latest-miniconda-installer-links)
+1. Find the latest Linux version and copy the link to the installer bash script.
+
+### Step 2 - Downloading the Miniconda Bash Script
+
+1. `cd /tmp`
+1. `curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh`
+
+### Step 3 - Running the Miniconda Script
+
+1. `bash Miniconda3-latest-Linux-x86_64.sh`
+1. You'll receive a prompt to "press ENTER to continue." Press `ENTER`, and then continue through the document by pressing the `SPACEBAR`.
+1. When you get to the end of the license, type `yes` then press `ENTER` as long as you agree to the license to complete installation.
+1. Once you agree to the license, you will be prompted to choose the location of the installation. Press `ENTER` to accept the default location (or specify a different location).
+1. Once installation is complete, you will be prompted "Do you wish the installer to initialize Miniconda3 by running conda init?" Type `yes` to use the `conda` command.
+
+### Step 4 - Activating Installation
+
+1. Activate the installation: `source ~/.bashrc`
+
+### Step 5 - Testing Installation
+
+1. Use the conda command to test the installation and activation: `conda list`
+
+## VI. Install your dotfiles onto a new system
+
+1. These steps assume you already store your configuration/dotfiles in a Git repository, and you seek to migrate them to your new Droplet.
+1. Create an alias `config` which we will use instead of the regular `git` when we want to interact with our configuration repository: `alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'`
+1. Make the source repository ignore the folder where you'll clone it, so that you don't create weird recursion problems: `echo ".cfg" >> .gitignore`
+1. Clone your dotfiles into a `bare` repository in a "dot" folder of your `$HOME`: `git clone --bare <git-repo-url> $HOME/.cfg`
+1. Define the alias in the current shell scope: `alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'`
+1. Checkout the actual content from the bare repository to your `$HOME`: `config checkout`
+1. The step above might fail with a message like:
+   > error: The following untracked working tree files would be overwritten by checkout:
+   >        .bashrc
+   > Please move or remove them before you switch branches.
+   > Aborting
+1. If you get the above error, move all the offending files automatically to a backup folder: mkdir -p .config-backup && \
+config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
+xargs -I{} mv {} .config-backup/{}
+1. Re-run the check out if you had problems: `config checkout`
+1. Set the flag `showUntrackedFiles` to no on this specific (local) repository: `config config --local status.showUntrackedFiles no`
+1. You're done, from now on you can now type config commands to add and update your dotfiles, for example: `config status`
 
 ## References
 
-1. [How To Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ubuntu-20-04-server-on-a-digitalocean-droplet)
-1. [Set up a Production-Ready Droplet](https://docs.digitalocean.com/tutorials/recommended-droplet-setup/)
-1. [Initial Server Setup with Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04)
-1. [How to Set Up SSH Keys on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
-1. [Awesome README](https://github.com/matiassingers/awesome-readme)
-1. [Easily Add Images to GitHub](https://ardalis.com/add-images-easily-to-github/)
+1. I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
+   1. [How To Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ubuntu-20-04-server-on-a-digitalocean-droplet)
+   1. [Set up a Production-Ready Droplet](https://docs.digitalocean.com/tutorials/recommended-droplet-setup/)
+1. II. Perform Initial Server Setup with Ubuntu 20.04
+   1. [Initial Server Setup with Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04)
+1. III. Connect to Your Droplet with VS Code
+   1. [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh)
+1. IV. Connect to GitHub with SSH
+   1. [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+   1. [SSH Essentials: Working with SSH Servers, Clients, and Keys](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
+1. V. Install Miniconda on Ubuntu 20.04
+   1. [How To Install Anaconda on Ubuntu 18.04 Quickstart](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart)
+   1. [Miniconda](https://docs.conda.io/en/latest/miniconda.html#latest-miniconda-installer-links)
+1. VI. Install your dotfiles onto a new system
+   1. [The best way to store your dotfiles: A bare Git repository](https://www.atlassian.com/git/tutorials/dotfiles)
+1. Other
+   1. [How to Set Up SSH Keys on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
+   1. [Awesome README](https://github.com/matiassingers/awesome-readme)
+   1. [Easily Add Images to GitHub](https://ardalis.com/add-images-easily-to-github/)
