@@ -2,7 +2,7 @@
 
 This README walks you through how to setup how to set up an Ubuntu 20.04 development environment on DigitalOcean. Although it is starting off as a step-by-step guide, my long-term goal is to automate as much of this as possible, so that a dev environment can be created in minutes (if not seconds).
 
-## I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
+## 1. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
 
 ### Step 1 - Creating a DigitalOcean account
 
@@ -77,7 +77,7 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 <img src="https://user-images.githubusercontent.com/35387991/148253072-e5ec4529-4574-4040-8e1e-0d57673e3eb8.png" 
      align="center" alt="Finalize and create your droplet!" width="556" height="96">
 
-## II. Perform Initial Server Setup with Ubuntu 20.04
+## 2. Perform Initial Server Setup with Ubuntu 20.04
 
 ### Step 1 - Logging in as root
 
@@ -108,7 +108,7 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 1. Add a copy of your local public key to the new user's ~/.ssh/authorized_keys file to log in successfully as the new user: `rsync --archive --chown=vikram:vikram ~/.ssh /home/vikram`
 1. Open up a new terminal session on your local machine, and use SSH with your new username: `ssh vikram@your_server_ip`. You should be logged in to the new user account without using a password.
 
-## III. Connect to Your Droplet with VS Code
+## 3. Connect to Your Droplet with VS Code
 
 ### Step 1 - Connect to a Droplet
 
@@ -129,7 +129,7 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 1. VS Code will automatically add your key to the agent so you don't have to enter your passphrase every time you open a remote VS Code window.
 1. The keys must be unlocked on each first login.
 
-## IV. Connect to GitHub with SSH
+## 4. Connect to GitHub with SSH
 
 ### Step 1 - Checking for existing SSH keys
 
@@ -167,7 +167,7 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
    > Are you sure you want to continue connecting (yes/no)?
 1. Verify that the fingerprint in the message you see matches [GitHub's RSA public key fingerprint](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints). If it does, then type `yes`.
 
-## V. Install your dotfiles onto a new system
+## 5. Install your dotfiles onto a new system
 
 1. These steps assume you already store your configuration/dotfiles in a Git repository, and you seek to migrate them to your new Droplet.
 1. Create an alias `config` which we will use instead of the regular `git` when we want to interact with our configuration repository: `alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'`
@@ -187,7 +187,7 @@ xargs -I{} mv {} .config-backup/{}
 1. Set the flag `showUntrackedFiles` to no on this specific (local) repository: `config config --local status.showUntrackedFiles no`
 1. You're done, from now on you can now type config commands to add and update your dotfiles, for example: `config status`
 
-## VI. Install Miniconda on Ubuntu 20.04
+## 6. Install Miniconda on Ubuntu 20.04
 
 ### Step 1 - Retrieving the Latest Version of Miniconda
 
@@ -215,7 +215,7 @@ xargs -I{} mv {} .config-backup/{}
 
 1. Use the conda command to test the installation and activation: `conda list`
 
-## VII. Install MongoDB Database Tools
+## 7. Install MongoDB Database Tools
 
 _The MongoDB Database Tools are a collection of command-line utilities for working with a MongoDB deployment. These tools release independently from the MongoDB Server schedule._
 
@@ -237,12 +237,12 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    > <img src="https://user-images.githubusercontent.com/35387991/148426071-de2a6186-5b28-4b22-960f-08d378160af9.png" 
       align="center" alt="mongorestore --version output" width="378" height="104">
 
-## VIII. Install redis-cli
+## 8. Install redis-cli
 
 1. Install redis-cli: `sudo apt install redis-tools`
 1. Test redis-cli: `redis-cli -h <redis-server> -p <redis-port> -a <password>`
 
-## IX. Install ngrok
+## 9. Install ngrok
 
 1. Install ngrok via Apt:
    > curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null &&
@@ -252,7 +252,7 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    * Use your personal Authtoken to authenticate the ngrok agent that you downloaded.
 1. Test by starting a tunnel: `ngrok http 80`
 
-## X. Install the Heroku CLI
+## 10. Install the Heroku CLI
 
 ### Step 1 - Download and install
 
@@ -270,7 +270,7 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    > <img src="https://user-images.githubusercontent.com/35387991/148583897-d871e716-4ec0-482b-8cbf-ed6261848255.png" 
        align="center" alt="Heroku API Key" width="377" height="147">
 
-## XI. Install Docker Engine on Ubuntu
+## 11. Install Docker Engine on Ubuntu
 
 ### Step 1 - Set up the repository
 
@@ -299,7 +299,7 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    * `sudo apt-get install docker-ce docker-ce-cli containerd.io`
 1. Verify that Docker Engine is installed correctly by running the `hello-world` image: `sudo docker run hello-world`. This command downloads a test image and runs it in a container. When the container runs, it prints a message and exits. Docker Engine is installed and running. The docker group is created but no users are added to it. You need to use sudo to run Docker commands.
 
-## XII. Installing Node Using the Node Version Manager
+## 12. Installing Node Using the Node Version Manager
 
 1. Visit [NVM's GitHub page](https://github.com/nvm-sh/nvm). Copy the curl command from the README file that displays on the main page. This will get you the most recent version of the installation script.
 1. Before piping the command through to `bash`, it is always a good idea to audit the script to make sure it isn’t doing anything you don’t agree with. You can do that by removing the `| bash` segment at the end of the curl command: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh`
@@ -316,40 +316,40 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
 
 ## References
 
-1. I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
+1. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
    1. [How To Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet](https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ubuntu-20-04-server-on-a-digitalocean-droplet)
    1. [Set up a Production-Ready Droplet](https://docs.digitalocean.com/tutorials/recommended-droplet-setup/)
-1. II. Perform Initial Server Setup with Ubuntu 20.04
+1. Perform Initial Server Setup with Ubuntu 20.04
    1. [Initial Server Setup with Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04)
-1. III. Connect to Your Droplet with VS Code
+1. Connect to Your Droplet with VS Code
    1. [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh)
    1. [Remote Development Tips and Tricks - Setting up the SSH Agent](https://code.visualstudio.com/docs/remote/troubleshooting#_setting-up-the-ssh-agent)
    1. [SSH Agent loses identity while restart machine](https://superuser.com/questions/951002/ssh-agent-loses-identity-while-restart-machine)
-1. IV. Connect to GitHub with SSH
+1. Connect to GitHub with SSH
    1. [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
    1. [SSH Essentials: Working with SSH Servers, Clients, and Keys](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
-1. V. Install your dotfiles onto a new system
+1. Install your dotfiles onto a new system
    1. [The best way to store your dotfiles: A bare Git repository](https://www.atlassian.com/git/tutorials/dotfiles)
-1. VI. Install Miniconda on Ubuntu 20.04
+1. Install Miniconda on Ubuntu 20.04
    1. [How To Install Anaconda on Ubuntu 18.04 Quickstart](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart)
    1. [Miniconda](https://docs.conda.io/en/latest/miniconda.html#latest-miniconda-installer-links)
-1. VII. Install MongoDB Database Tools
+1. Install MongoDB Database Tools
    1. [MongoDB: Choose which type of deployment is best for you](https://www.mongodb.com/try/download)
    1. [How To Install MongoDB on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04)
-1. VIII. Install redis-cli
+1. Install redis-cli
    1. [redis-cli, the Redis command line interface](https://redis.io/topics/rediscli)
    1. [How To Install Redis CLI on Ubuntu](https://www.howtodojo.com/install-redis-cli-ubuntu/)
    1. [How to Get Redis-cli Without Installing Redis Server (even on Windows)](https://redis.com/blog/get-redis-cli-without-installing-redis-server/)
-1. IX. Install ngrok
+1. Install ngrok
    1. [Install ngrok](https://ngrok.com/download)
-1. X. Install the Heroku CLI
+1. Install the Heroku CLI
    1. [The Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
    1. [Not able login to Heroku account from command line](https://stackoverflow.com/questions/68105084/not-able-login-to-heroku-account-from-command-line)
    1. [Heroku CLI Authentication](https://devcenter.heroku.com/articles/authentication)
-1. XI. Install Docker Engine on Ubuntu
+1. Install Docker Engine on Ubuntu
    1. [Install Docker Engine on Ubuntu - Install using the repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
    1. [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/)
-1. XII. Installing Node Using the Node Version Manager
+1. Installing Node Using the Node Version Manager
    1. [How To Install Node.js on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
    1. [Node Version Manager](https://github.com/nvm-sh/nvm)
    1. [Downloading and installing Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
