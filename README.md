@@ -247,10 +247,28 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
 1. Install ngrok via Apt:
    > curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null &&
               echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list &&
-              sudo apt update && sudo apt install ngrok   
+              sudo apt update && sudo apt install ngrok
 1. Add authtoken: `ngrok authtoken <token>`
    * Use your personal Authtoken to authenticate the ngrok agent that you downloaded.
 1. Test by starting a tunnel: `ngrok http 80`
+
+## X. Install the Heroku CLI
+
+### Step 1 - Download and install
+
+1. Install the Heroku CLI: `sudo snap install --classic heroku`
+
+### Step 2 - Verifying your installation
+
+1. To verify your CLI installation, use the `heroku --version` command: `heroku --version`
+
+### Step 3 - Getting started
+
+1. After you install the CLI, run the `heroku login -i` command.
+1. You'll be prompted to enter your email.
+1. You'll then be prompted to enter your password; however, if your account has MFA enabled, API requests using basic authentication with email and password are not supported. Submit your API Key instead.
+   > <img src="https://user-images.githubusercontent.com/35387991/148583897-d871e716-4ec0-482b-8cbf-ed6261848255.png" 
+       align="center" alt="Heroku API Key" width="377" height="147">
 
 ## References
 
@@ -280,6 +298,10 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    1. [How to Get Redis-cli Without Installing Redis Server (even on Windows)](https://redis.com/blog/get-redis-cli-without-installing-redis-server/)
 1. IX. Install ngrok
    1. [Install ngrok](https://ngrok.com/download)
+1. X. Install the Heroku CLI
+   1. [The Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+   1. [Not able login to Heroku account from command line](https://stackoverflow.com/questions/68105084/not-able-login-to-heroku-account-from-command-line)
+   1. [Heroku CLI Authentication](https://devcenter.heroku.com/articles/authentication)
 1. Other
    1. [How to Set Up SSH Keys on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
    1. [Awesome README](https://github.com/matiassingers/awesome-readme)
