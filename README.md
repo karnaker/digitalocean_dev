@@ -121,6 +121,14 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
    >    User `vikram` \
    >    IdentityFile `~\.ssh\id_rsa`
 
+### Step 2 - Setting up the SSH Agent
+
+1. If you are connecting to an SSH host using a key with a passphrase, you should ensure that the SSH Agent is running **locally**.
+1. Follow [these instructions to start the SSH Agent](https://code.visualstudio.com/docs/remote/troubleshooting#_setting-up-the-ssh-agent). After starting the agent, be sure to restart VS Code.
+1. To verify that the agent is running and is reachable from VS Code's environment, run `ssh-add -l` in the terminal of a local VS Code window. You should see a listing of the keys in the agent (or a message that it has no keys).
+1. VS Code will automatically add your key to the agent so you don't have to enter your passphrase every time you open a remote VS Code window.
+1. The keys must be unlocked on each first login.
+
 ## IV. Connect to GitHub with SSH
 
 ### Step 1 - Checking for existing SSH keys
@@ -159,7 +167,27 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
    > Are you sure you want to continue connecting (yes/no)?
 1. Verify that the fingerprint in the message you see matches [GitHub's RSA public key fingerprint](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints). If it does, then type `yes`.
 
-## V. Install Miniconda on Ubuntu 20.04
+## V. Install your dotfiles onto a new system
+
+1. These steps assume you already store your configuration/dotfiles in a Git repository, and you seek to migrate them to your new Droplet.
+1. Create an alias `config` which we will use instead of the regular `git` when we want to interact with our configuration repository: `alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'`
+1. Make the source repository ignore the folder where you'll clone it, so that you don't create weird recursion problems: `echo ".cfg" >> .gitignore`
+1. Clone your dotfiles into a `bare` repository in a "dot" folder of your `$HOME`: `git clone --bare <git-repo-url> $HOME/.cfg`
+1. Define the alias in the current shell scope: `alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'`
+1. Checkout the actual content from the bare repository to your `$HOME`: `config checkout`
+1. The step above might fail with a message like:
+   > error: The following untracked working tree files would be overwritten by checkout:
+   >        .bashrc
+   > Please move or remove them before you switch branches.
+   > Aborting
+1. If you get the above error, move all the offending files automatically to a backup folder: mkdir -p .config-backup && \
+config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
+xargs -I{} mv {} .config-backup/{}
+1. Re-run the check out if you had problems: `config checkout`
+1. Set the flag `showUntrackedFiles` to no on this specific (local) repository: `config config --local status.showUntrackedFiles no`
+1. You're done, from now on you can now type config commands to add and update your dotfiles, for example: `config status`
+
+## VI. Install Miniconda on Ubuntu 20.04
 
 ### Step 1 - Retrieving the Latest Version of Miniconda
 
@@ -187,27 +215,8 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 
 1. Use the conda command to test the installation and activation: `conda list`
 
-## VI. Install your dotfiles onto a new system
-
-1. These steps assume you already store your configuration/dotfiles in a Git repository, and you seek to migrate them to your new Droplet.
-1. Create an alias `config` which we will use instead of the regular `git` when we want to interact with our configuration repository: `alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'`
-1. Make the source repository ignore the folder where you'll clone it, so that you don't create weird recursion problems: `echo ".cfg" >> .gitignore`
-1. Clone your dotfiles into a `bare` repository in a "dot" folder of your `$HOME`: `git clone --bare <git-repo-url> $HOME/.cfg`
-1. Define the alias in the current shell scope: `alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'`
-1. Checkout the actual content from the bare repository to your `$HOME`: `config checkout`
-1. The step above might fail with a message like:
-   > error: The following untracked working tree files would be overwritten by checkout:
-   >        .bashrc
-   > Please move or remove them before you switch branches.
-   > Aborting
-1. If you get the above error, move all the offending files automatically to a backup folder: mkdir -p .config-backup && \
-config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
-xargs -I{} mv {} .config-backup/{}
-1. Re-run the check out if you had problems: `config checkout`
-1. Set the flag `showUntrackedFiles` to no on this specific (local) repository: `config config --local status.showUntrackedFiles no`
-1. You're done, from now on you can now type config commands to add and update your dotfiles, for example: `config status`
-
 ## VII. Install MongoDB Database Tools
+
 _The MongoDB Database Tools are a collection of command-line utilities for working with a MongoDB deployment. These tools release independently from the MongoDB Server schedule._
 
 ### Step 1 - Installing MongoDB Database Tools
@@ -237,14 +246,16 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    1. [Initial Server Setup with Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04)
 1. III. Connect to Your Droplet with VS Code
    1. [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh)
+   1. [Remote Development Tips and Tricks - Setting up the SSH Agent](https://code.visualstudio.com/docs/remote/troubleshooting#_setting-up-the-ssh-agent)
+   1. [SSH Agent loses identity while restart machine](https://superuser.com/questions/951002/ssh-agent-loses-identity-while-restart-machine)
 1. IV. Connect to GitHub with SSH
    1. [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
    1. [SSH Essentials: Working with SSH Servers, Clients, and Keys](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
-1. V. Install Miniconda on Ubuntu 20.04
+1. V. Install your dotfiles onto a new system
+   1. [The best way to store your dotfiles: A bare Git repository](https://www.atlassian.com/git/tutorials/dotfiles)
+1. VI. Install Miniconda on Ubuntu 20.04
    1. [How To Install Anaconda on Ubuntu 18.04 Quickstart](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart)
    1. [Miniconda](https://docs.conda.io/en/latest/miniconda.html#latest-miniconda-installer-links)
-1. VI. Install your dotfiles onto a new system
-   1. [The best way to store your dotfiles: A bare Git repository](https://www.atlassian.com/git/tutorials/dotfiles)
 1. VII. Install MongoDB Database Tools
    1. [MongoDB: Choose which type of deployment is best for you](https://www.mongodb.com/try/download)
    1. [How To Install MongoDB on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04)
