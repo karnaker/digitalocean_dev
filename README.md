@@ -237,6 +237,11 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    > <img src="https://user-images.githubusercontent.com/35387991/148426071-de2a6186-5b28-4b22-960f-08d378160af9.png" 
       align="center" alt="mongorestore --version output" width="378" height="104">
 
+## VIII. Install redis-cli
+
+1. Install redis-cli: `sudo apt install redis-tools`
+1. Test redis-cli: `redis-cli -h <redis-server> -p <redis-port> -a <password>`
+
 ## References
 
 1. I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
@@ -259,6 +264,10 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
 1. VII. Install MongoDB Database Tools
    1. [MongoDB: Choose which type of deployment is best for you](https://www.mongodb.com/try/download)
    1. [How To Install MongoDB on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-20-04)
+1. VIII. Install redis-cli
+   1. [redis-cli, the Redis command line interface](https://redis.io/topics/rediscli)
+   1. [How To Install Redis CLI on Ubuntu](https://www.howtodojo.com/install-redis-cli-ubuntu/)
+   1. [How to Get Redis-cli Without Installing Redis Server (even on Windows)](https://redis.com/blog/get-redis-cli-without-installing-redis-server/)
 1. Other
    1. [How to Set Up SSH Keys on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
    1. [Awesome README](https://github.com/matiassingers/awesome-readme)
