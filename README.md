@@ -299,6 +299,21 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    * `sudo apt-get install docker-ce docker-ce-cli containerd.io`
 1. Verify that Docker Engine is installed correctly by running the `hello-world` image: `sudo docker run hello-world`. This command downloads a test image and runs it in a container. When the container runs, it prints a message and exits. Docker Engine is installed and running. The docker group is created but no users are added to it. You need to use sudo to run Docker commands.
 
+## XII. Installing Node Using the Node Version Manager
+
+1. Visit [NVM's GitHub page](https://github.com/nvm-sh/nvm). Copy the curl command from the README file that displays on the main page. This will get you the most recent version of the installation script.
+1. Before piping the command through to `bash`, it is always a good idea to audit the script to make sure it isn’t doing anything you don’t agree with. You can do that by removing the `| bash` segment at the end of the curl command: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh`
+   * Take a look and make sure you are comfortable with the changes it is making.
+1. When you are satisfied, run the command again with `| bash` appended at the end to install the nvm script to your user account: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash`
+1. To use it, you must first source your `.bashrc` file: `source ~/.bashrc`
+1. Now, you can ask NVM which versions of Node are available: `nvm list-remote`
+1. You can install a version of Node by typing any of the release versions you see. For instance, to get version v17.3.0, you can type: `nvm install v17.3.0`
+1. You can see the different versions you have installed by typing: `nvm list`
+   * This shows the currently active version on the first line (-> v17.3.0), followed by some named aliases and the versions that those aliases point to.
+1. You can verify that the install was successful by typing:
+   * `node -v`
+   * `npm -v`
+
 ## References
 
 1. I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
@@ -334,6 +349,10 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
 1. XI. Install Docker Engine on Ubuntu
    1. [Install Docker Engine on Ubuntu - Install using the repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
    1. [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/)
+1. XII. Installing Node Using the Node Version Manager
+   1. [How To Install Node.js on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
+   1. [Node Version Manager](https://github.com/nvm-sh/nvm)
+   1. [Downloading and installing Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 1. Other
    1. [How to Set Up SSH Keys on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
    1. [Awesome README](https://github.com/matiassingers/awesome-readme)
