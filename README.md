@@ -270,6 +270,35 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    > <img src="https://user-images.githubusercontent.com/35387991/148583897-d871e716-4ec0-482b-8cbf-ed6261848255.png" 
        align="center" alt="Heroku API Key" width="377" height="147">
 
+## XI. Install Docker Engine on Ubuntu
+
+### Step 1 - Set up the repository
+
+1. Update the `apt` package index and install packages to allow `apt` to use a repository over HTTPS:
+   ```
+   sudo apt-get update
+   ```
+   ```
+   sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+   ```
+1. Add Docker’s official GPG key: `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg`
+1. Use the following command to set up the stable repository:
+   ```
+   echo \
+   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   ```
+### Step 2 - Install Docker Engine
+
+1. Update the apt package index, and install the latest version of Docker Engine and containerd, or go to the next step to install a specific version:
+   * `sudo apt-get update`
+   * `sudo apt-get install docker-ce docker-ce-cli containerd.io`
+1. Verify that Docker Engine is installed correctly by running the `hello-world` image: `sudo docker run hello-world`. This command downloads a test image and runs it in a container. When the container runs, it prints a message and exits. Docker Engine is installed and running. The docker group is created but no users are added to it. You need to use sudo to run Docker commands.
+
 ## References
 
 1. I. Set Up an Ubuntu 20.04 Server on a DigitalOcean Droplet
@@ -302,6 +331,9 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    1. [The Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
    1. [Not able login to Heroku account from command line](https://stackoverflow.com/questions/68105084/not-able-login-to-heroku-account-from-command-line)
    1. [Heroku CLI Authentication](https://devcenter.heroku.com/articles/authentication)
+1. XI. Install Docker Engine on Ubuntu
+   1. [Install Docker Engine on Ubuntu - Install using the repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+   1. [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/)
 1. Other
    1. [How to Set Up SSH Keys on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-on-ubuntu-20-04)
    1. [Awesome README](https://github.com/matiassingers/awesome-readme)
