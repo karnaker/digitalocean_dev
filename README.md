@@ -29,10 +29,10 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 
 ### Step 4 - Choosing a Plan
 
-1. In the Choose a plan section, you can choose the amount of RAM, storage space, and CPU cores your Droplet will have. The Basic $5 per month plan is sufficient.
+1. In the Choose a plan section, you can choose the amount of RAM, storage space, and CPU cores your Droplet will have. The Basic, Regular Intel with SSD, $10 per month plan is sufficient.
 
-<img src="https://user-images.githubusercontent.com/35387991/148157465-97d91bb1-da28-4cc3-a817-e323fa3062a1.png" 
-     align="center" alt="Choose plan: Shared CPU / Basic, Regular Intel with SSD, $5/month" width="247" height="517">
+<img src="https://user-images.githubusercontent.com/35387991/148661830-31632bb7-5e5f-445f-a95f-6cb0c87e2fb7.png" 
+     align="center" alt="Choose plan: Shared CPU / Basic, Regular Intel with SSD, $10/month for 2 GB memory, 1 CPU, 50 GB SSD Disk, 2 TB transfer" width="391" height="503">
 
 ### Step 5 - Adding Block Storage (Optional)
 
