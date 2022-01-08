@@ -108,7 +108,20 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 1. Add a copy of your local public key to the new user's ~/.ssh/authorized_keys file to log in successfully as the new user: `rsync --archive --chown=vikram:vikram ~/.ssh /home/vikram`
 1. Open up a new terminal session on your local machine, and use SSH with your new username: `ssh vikram@your_server_ip`. You should be logged in to the new user account without using a password.
 
-## 3. Connect to Your Droplet with VS Code
+## 3. Upgrade Ubuntu
+
+### Step 1 – Updating Currently Installed Packages
+
+1. Update to the latest versions of all packages for the current release. Begin by updating the package list: `sudo apt update`
+1. Next, upgrade installed packages to their latest available versions: `sudo apt upgrade`
+   *  You will be shown a list of upgrades, and prompted to continue. Answer **y** for yes and press **Enter**.
+1. Once it finishes, use the `dist-upgrade` command with `apt-get`, which will perform any additional upgrades that involve changing dependencies, adding or removing new packages as necessary. This will handle a set of upgrades which may have been held back by the previous `apt upgrade` step: `sudo apt dist-upgrade`
+
+### Step 2 - Rebooting
+
+1. Tell the shutdown command to reboot: `sudo shutdown -r now "Rebooting now"`
+
+## 4. Connect to Your Droplet with VS Code
 
 ### Step 1 - Connect to a Droplet
 
@@ -129,7 +142,7 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 1. VS Code will automatically add your key to the agent so you don't have to enter your passphrase every time you open a remote VS Code window.
 1. The keys must be unlocked on each first login.
 
-## 4. Connect to GitHub with SSH
+## 5. Connect to GitHub with SSH
 
 ### Step 1 - Checking for existing SSH keys
 
@@ -167,7 +180,7 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
    > Are you sure you want to continue connecting (yes/no)?
 1. Verify that the fingerprint in the message you see matches [GitHub's RSA public key fingerprint](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints). If it does, then type `yes`.
 
-## 5. Install your dotfiles onto a new system
+## 6. Install your dotfiles onto a new system
 
 1. These steps assume you already store your configuration/dotfiles in a Git repository, and you seek to migrate them to your new Droplet.
 1. Create an alias `config` which we will use instead of the regular `git` when we want to interact with our configuration repository: `alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'`
@@ -187,7 +200,7 @@ xargs -I{} mv {} .config-backup/{}
 1. Set the flag `showUntrackedFiles` to no on this specific (local) repository: `config config --local status.showUntrackedFiles no`
 1. You're done, from now on you can now type config commands to add and update your dotfiles, for example: `config status`
 
-## 6. Install Miniconda on Ubuntu 20.04
+## 7. Install Miniconda on Ubuntu 20.04
 
 ### Step 1 - Retrieving the Latest Version of Miniconda
 
@@ -215,7 +228,7 @@ xargs -I{} mv {} .config-backup/{}
 
 1. Use the conda command to test the installation and activation: `conda list`
 
-## 7. Install MongoDB Database Tools
+## 8. Install MongoDB Database Tools
 
 _The MongoDB Database Tools are a collection of command-line utilities for working with a MongoDB deployment. These tools release independently from the MongoDB Server schedule._
 
@@ -239,12 +252,12 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    > <img src="https://user-images.githubusercontent.com/35387991/148426071-de2a6186-5b28-4b22-960f-08d378160af9.png" 
       align="center" alt="mongorestore --version output" width="378" height="104">
 
-## 8. Install redis-cli
+## 9. Install redis-cli
 
 1. Install redis-cli: `sudo apt install redis-tools`
 1. Test redis-cli: `redis-cli -h <redis-server> -p <redis-port> -a <password>`
 
-## 9. Install ngrok
+## 10. Install ngrok
 
 1. Install ngrok via Apt:
    > curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null &&
@@ -254,7 +267,7 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    * Use your personal Authtoken to authenticate the ngrok agent that you downloaded.
 1. Test by starting a tunnel: `ngrok http 80`
 
-## 10. Install the Heroku CLI
+## 11.Install the Heroku CLI
 
 ### Step 1 - Download and install
 
@@ -272,7 +285,7 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    > <img src="https://user-images.githubusercontent.com/35387991/148583897-d871e716-4ec0-482b-8cbf-ed6261848255.png" 
        align="center" alt="Heroku API Key" width="377" height="147">
 
-## 11. Install Docker Engine on Ubuntu
+## 12.Install Docker Engine on Ubuntu
 
 ### Step 1 - Set up the repository
 
@@ -301,7 +314,7 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    * `sudo apt-get install docker-ce docker-ce-cli containerd.io`
 1. Verify that Docker Engine is installed correctly by running the `hello-world` image: `sudo docker run hello-world`. This command downloads a test image and runs it in a container. When the container runs, it prints a message and exits. Docker Engine is installed and running. The docker group is created but no users are added to it. You need to use sudo to run Docker commands.
 
-## 12. Installing Node Using the Node Version Manager
+## 13.Installing Node Using the Node Version Manager
 
 1. Visit [NVM's GitHub page](https://github.com/nvm-sh/nvm). Copy the curl command from the README file that displays on the main page. This will get you the most recent version of the installation script.
 1. Before piping the command through to `bash`, it is always a good idea to audit the script to make sure it isn’t doing anything you don’t agree with. You can do that by removing the `| bash` segment at the end of the curl command: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh`
@@ -323,6 +336,10 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    1. [Set up a Production-Ready Droplet](https://docs.digitalocean.com/tutorials/recommended-droplet-setup/)
 1. Perform Initial Server Setup with Ubuntu 20.04
    1. [Initial Server Setup with Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04)
+1. Upgrade Ubuntu
+   1. [How To Upgrade to Ubuntu 20.04 Focal Fossa](https://www.digitalocean.com/community/tutorials/how-to-upgrade-to-ubuntu-20-04-focal-fossa)
+   1. [Command-line Basics: Shutdown and Reboot](https://www.digitalocean.com/community/tutorials/workflow-command-line-basics-shutdown-reboot)
+   1. [29 packages can be updated - How?](https://askubuntu.com/questions/449032/29-packages-can-be-updated-how)
 1. Connect to Your Droplet with VS Code
    1. [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh)
    1. [Remote Development Tips and Tricks - Setting up the SSH Agent](https://code.visualstudio.com/docs/remote/troubleshooting#_setting-up-the-ssh-agent)
