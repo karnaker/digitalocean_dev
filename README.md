@@ -142,6 +142,19 @@ This README walks you through how to setup how to set up an Ubuntu 20.04 develop
 1. VS Code will automatically add your key to the agent so you don't have to enter your passphrase every time you open a remote VS Code window.
 1. The keys must be unlocked on each first login.
 
+### Step 3 - Prevent potential VS Code error ENOSPC
+
+1. To help prevent a potential error ENOSPC, such as when running `npm run start` in React, where VS Code is unable to watch for file changes in a large workspace, make sure that potentially large folders are added to the `files.watcherExclude` setting.
+1. Open the Settings editor from the **Command Palette** (Ctrl+Shift+P) with **Preferences: Open Settings (JSON)**.
+1. Exclude specific workspace directories from the VS Code file watcher with the `files.watcherExclude` setting. The default for `files.watcherExclude` excludes `node_modules` and some folders under `.git`, but you can add other directories that you don't want VS Code to track.
+   ```
+   "files.watcherExclude": {
+      "**/.git/objects/**": true,
+      "**/.git/subtree-cache/**": true,
+      "**/node_modules/*/**": true
+    }
+   ```
+
 ## 5. Connect to GitHub with SSH
 
 ### Step 1 - Checking for existing SSH keys
@@ -344,6 +357,9 @@ _The MongoDB Database Tools are a collection of command-line utilities for worki
    1. [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh)
    1. [Remote Development Tips and Tricks - Setting up the SSH Agent](https://code.visualstudio.com/docs/remote/troubleshooting#_setting-up-the-ssh-agent)
    1. [SSH Agent loses identity while restart machine](https://superuser.com/questions/951002/ssh-agent-loses-identity-while-restart-machine)
+   1. [Visual Studio Code on Linux - "Visual Studio Code is unable to watch for file changes in this large workspace" (error ENOSPC)](https://code.visualstudio.com/docs/setup/linux#_visual-studio-code-is-unable-to-watch-for-file-changes-in-this-large-workspace-error-enospc)
+   1. [Settings - Creating User and Workspace Settings](https://code.visualstudio.com/docs/getstarted/settings#_creating-user-and-workspace-settings)
+   1. [Settings - Default settings](https://code.visualstudio.com/docs/getstarted/settings#_default-settings)
 1. Connect to GitHub with SSH
    1. [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
    1. [SSH Essentials: Working with SSH Servers, Clients, and Keys](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
